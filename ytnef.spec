@@ -4,7 +4,7 @@
 #
 Name     : ytnef
 Version  : 1.9.3
-Release  : 2
+Release  : 3
 URL      : https://github.com/Yeraze/ytnef/archive/v1.9.3.tar.gz
 Source0  : https://github.com/Yeraze/ytnef/archive/v1.9.3.tar.gz
 Summary  : Yerase's TNEF Stream Reader library
@@ -13,6 +13,8 @@ License  : GPL-2.0
 Requires: ytnef-bin = %{version}-%{release}
 Requires: ytnef-lib = %{version}-%{release}
 Requires: ytnef-license = %{version}-%{release}
+Patch1: CVE-2021-3403.patch
+Patch2: CVE-2021-3404.patch
 
 %description
 Yerase's TNEF Stream Reader
@@ -60,21 +62,23 @@ license components for the ytnef package.
 %prep
 %setup -q -n ytnef-1.9.3
 cd %{_builddir}/ytnef-1.9.3
+%patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1604357842
+export SOURCE_DATE_EPOCH=1616626486
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
 %autogen --disable-static
 make  %{?_smp_mflags}
 
@@ -86,7 +90,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1604357842
+export SOURCE_DATE_EPOCH=1616626486
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/ytnef
 cp %{_builddir}/ytnef-1.9.3/COPYING %{buildroot}/usr/share/package-licenses/ytnef/12549569098cbb0efa8a4aa91f5f38068791fe42
