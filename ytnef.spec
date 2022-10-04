@@ -4,7 +4,7 @@
 #
 Name     : ytnef
 Version  : 1.9.3
-Release  : 4
+Release  : 5
 URL      : https://github.com/Yeraze/ytnef/archive/v1.9.3.tar.gz
 Source0  : https://github.com/Yeraze/ytnef/archive/v1.9.3.tar.gz
 Summary  : Yerase's TNEF Stream Reader library
@@ -70,15 +70,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1616626486
+export SOURCE_DATE_EPOCH=1664894011
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
 %autogen --disable-static
 make  %{?_smp_mflags}
 
@@ -90,10 +90,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1616626486
+export SOURCE_DATE_EPOCH=1664894011
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/ytnef
-cp %{_builddir}/ytnef-1.9.3/COPYING %{buildroot}/usr/share/package-licenses/ytnef/12549569098cbb0efa8a4aa91f5f38068791fe42
+cp %{_builddir}/ytnef-%{version}/COPYING %{buildroot}/usr/share/package-licenses/ytnef/12549569098cbb0efa8a4aa91f5f38068791fe42 || :
 %make_install
 
 %files
